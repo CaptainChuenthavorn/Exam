@@ -20,8 +20,9 @@ int main()
 	int tempAll;
 	int min[100];
 	int max=0;
+	printf("How many students : ");
 	scanf("%d", &n);
-
+	printf("How many test : ");
 	scanf("%d", &m);
 	students = (struct STUDENT*)malloc(n * sizeof(struct STUDENT));
 	for (int i = 0;i < n;i++) {
@@ -33,20 +34,8 @@ int main()
 		}
 		students[i].all = 0;
 	}
-	/*for (int i = 0;i < n;i++) {
-		for (int j = 0;j < m;j++) {
-			students[i].all +=students[i].test[j];
-		}
-	}*/
 	plusScore(students, n, m);
-	for (int i = 0;i < 100;i++)
-	{
-		min[i] = 999;
-	}
 	minusLeastScore(students, n, m, min);
-	for (int i = 0;i < n;i++) {
-			students[i].all -= min[i];
-	}
 	for (int i = 0;i < n;i++) {
 		if (students[i].all > max)
 		{
@@ -54,7 +43,7 @@ int main()
 		}
 	}
 
-	printf("\nlist\n");
+	printf("\n\nlist\n");
 	for (int k = 0;k < n;k++)
 	{
 		printf("%s", students[k].name);
@@ -62,7 +51,7 @@ int main()
 
 			printf(" %d ", students[k].test[j]);
 		}
-		printf(" all : %d ", students[k].all);
+		printf(" minus %d , Score = %d ",min[k], students[k].all);
 		printf("\n");
 	}
 
@@ -93,13 +82,28 @@ void plusScore(struct STUDENT *students, int n,int m)
 }
 void minusLeastScore(struct STUDENT* students, int n, int m,int min[100]) 
 {
-
+	for (int i = 0;i < 100;i++)
+	{
+		min[i] = 999;
+	}
 	for (int i = 0;i < n;i++) {
 		for (int j = 0;j < m;j++) {
 			if (students[i].test[j] < min[i])
 			{
 				min[i] = students[i].test[j];
 			}
+		}
+	}
+	for (int i = 0;i < n;i++) {
+		students[i].all -= min[i];
+	}
+}
+void maxScore(struct STUDENT* students, int n,int max)
+{
+	for (int i = 0;i < n;i++) {
+		if (students[i].all > max)
+		{
+			max = students[i].all;
 		}
 	}
 }
